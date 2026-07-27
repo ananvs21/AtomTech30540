@@ -1,21 +1,28 @@
 package org.firstinspires.ftc.teamcode.subsystems;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.controller.PIDController;
 
 public class OuttakeSubsystem extends SubsystemBase {
-    private final DcMotor motorMediador;
-    private final DcMotor motorOuttake;
-    public static double kP = 0.01;
-    public static double kI = 0.01;
-    public static double kD = 0.01;
-    double target;
+    private final DcMotorEx motorMediador;
+    private final DcMotorEx motorOuttake;
+
+    public static double kP = 0.005;
+    public static double kI = 0.0002;
+    public static double kD = 0.0;
+
+    double targetVelocity;      // em ticks/s (interno)
     PIDController pid;
-    public OuttakeSubsystem (HardwareMap hardwareMap){
-        motorMediador = hardwareMap.get(DcMotor.class, "motorMediador");
-        motorOuttake = hardwareMap.get(DcMotor.class, "motorOuttake");
+
+    private static final double TICKS_PER_REVOLUTION = 28.0;
+
+    public OuttakeSubsystem(HardwareMap hardwareMap) {
+        motorMediador = hardwareMap.get(DcMotorEx.class, "motorMediador");
+        motorOuttake = hardwareMap.get(DcMotorEx.class, "motorOuttake");
 
         motorMediador.setDirection(DcMotorSimple.Direction.FORWARD);
         motorOuttake.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -23,24 +30,40 @@ public class OuttakeSubsystem extends SubsystemBase {
         motorMediador.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorOuttake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        pid = new PIDController( kP, kI, kD);
+        motorOuttake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        pid = new PIDController(kP, kI, kD);
+        targetVelocity = 0.0;
     }
-    public void setPowerMediador (double power){
+
+    public void setPowerMediador(double power) {
         motorMediador.setPower(power);
     }
-    public double getCurrentPosition() {
-        return motorOuttake.getCurrentPosition();
+
+    public double getCurrentVelocity() {
+        return motorOuttake.getVelocity();   // ticks/s
     }
-    public void stop (){
-        motorOuttake.setPower(0);
+
+    // ÚNICA conversão necessária: RPM → ticks/s
+    private double rpmToTicks(double rpm) {
+        return (rpm * TICKS_PER_REVOLUTION) / 60.0;
+    }
+
+    // O teu alvo em RPM
+    public void setTargetRPM(double rpm) {
+        this.targetVelocity = rpmToTicks(rpm);
+    }
+
+    public void stop() {
         motorMediador.setPower(0);
-        this.target = motorOuttake.getCurrentPosition();
+        targetVelocity = 0.0;
+        motorOuttake.setPower(0);
     }
+
     @Override
-    public void periodic (){
-        pid.setPID(kP,kI, kD);
-        double power = pid.calculate(getCurrentPosition(), target);
+    public void periodic() {
+        pid.setPID(kP, kI, kD);
+        double power = pid.calculate(getCurrentVelocity(), targetVelocity);
         motorOuttake.setPower(power);
     }
 }
