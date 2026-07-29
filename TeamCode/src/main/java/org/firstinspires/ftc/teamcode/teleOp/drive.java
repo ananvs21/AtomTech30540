@@ -3,34 +3,26 @@ package org.firstinspires.ftc.teamcode.teleOp;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
+import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.commands.DriveCommand;
-import org.firstinspires.ftc.teamcode.commands.pretemporada.IntakeCommand;
-import org.firstinspires.ftc.teamcode.commands.pretemporada.OuttakeCommand;
-import org.firstinspires.ftc.teamcode.subsystems.pretemporada.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
-import org.firstinspires.ftc.teamcode.subsystems.pretemporada.OuttakeSubsystem;
 
 import java.util.function.DoubleSupplier;
-@TeleOp(name = "Integrado", group = "TeleOp")
+@TeleOp (name = "drive", group = "TeleOp")
+public class drive extends CommandOpMode {
 
-public class Integrado extends CommandOpMode {
     private MecanumDriveSubsystem drive;
-    private IntakeSubsystem intake;
-    private OuttakeSubsystem outtake;
     private GamepadEx gamepad;
 
     @Override
     public void initialize() {
         drive = new MecanumDriveSubsystem(hardwareMap);
-        intake = new IntakeSubsystem(hardwareMap);
-        outtake = new OuttakeSubsystem(hardwareMap);
-        CommandScheduler.getInstance().registerSubsystem(drive, intake, outtake);
+        CommandScheduler.getInstance().registerSubsystem(drive);
 
         gamepad = new GamepadEx(gamepad1);
-
 
         drive.setDefaultCommand(new DriveCommand(drive, new DoubleSupplier() {
             @Override
@@ -49,11 +41,7 @@ public class Integrado extends CommandOpMode {
             }
         }
         ));
-        gamepad.getGamepadButton(GamepadKeys.Button.A)
-                .toggleWhenPressed(new IntakeCommand(intake, IntakeSubsystem.coletaPower));
-        gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whileHeld(new IntakeCommand(intake, IntakeSubsystem.expelirPower));
-        gamepad.getGamepadButton(GamepadKeys.Button.X)
-                .toggleWhenPressed(new OuttakeCommand(outtake, 4000, 1));
+        gamepad.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new InstantCommand(() -> drive.resetYaw()));
     }
 }

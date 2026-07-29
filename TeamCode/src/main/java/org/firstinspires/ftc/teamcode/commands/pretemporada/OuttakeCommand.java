@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.commands;
+package org.firstinspires.ftc.teamcode.commands.pretemporada;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
-import org.firstinspires.ftc.teamcode.subsystems.OuttakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.pretemporada.OuttakeSubsystem;
 
 public class OuttakeCommand extends CommandBase {
     private final OuttakeSubsystem outtakeSubsystem;
