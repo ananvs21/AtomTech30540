@@ -17,6 +17,7 @@ public class MecanumDriveSubsystem extends SubsystemBase {
         private final DcMotorEx backRight;
         private final IMU imu;
         private static final double STRAFE_GAIN = 1.1;
+        private static final double DEADZONE = 0.1;
         private double robotHeading = 0.0;
         public MecanumDriveSubsystem(HardwareMap hardwareMap) {
             frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -48,7 +49,15 @@ public class MecanumDriveSubsystem extends SubsystemBase {
         public void periodic() {
             robotHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
+        private double deadzone(double value) {
+            if (Math.abs(value) < DEADZONE) return 0;
+        return value;
+    }
         public void drive(double forward, double strafe, double turn) {
+            forward = deadzone(forward);
+            strafe = deadzone(strafe);
+            turn = deadzone(turn);
+
             double botHeading = this.robotHeading;
 
             // Rotate the movement direction counter to the bot's rotation

@@ -49,7 +49,6 @@ public class OuttakeSubsystem extends SubsystemBase {
         return (rpm * TICKS_PER_REVOLUTION) / 60.0;
     }
 
-    // O teu alvo em RPM
     public void setTargetRPM(double rpm) {
         this.targetVelocity = rpmToTicks(rpm);
     }

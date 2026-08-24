@@ -36,12 +36,12 @@ public class OuttakeCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false; // Comando contínuo — só termina com toggle (2.º clique)
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
         outtakeSubsystem.setPowerMediador(0);
-        outtakeSubsystem.stop(); // Para TUDO sempre (mediador + PID + motor)
+        outtakeSubsystem.stop();
     }
 }
