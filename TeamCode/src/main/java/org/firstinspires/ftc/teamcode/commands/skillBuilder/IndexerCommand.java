@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.subsystems.skillBuilder.IndexerSubsystem;
 public class IndexerCommand extends CommandBase {
     IndexerSubsystem indexerSubsystem;
 
-    public IndexerCommand (IndexerSubsystem indexerSubsystem){
+    public IndexerCommand (IndexerSubsystem indexerSubsystem, double indexerPower){
         this.indexerSubsystem = indexerSubsystem;
         addRequirements(indexerSubsystem);
     }

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.teleOp;
+package org.firstinspires.ftc.teamcode.teleOp.pretemporada;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -7,9 +7,9 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
 import org.firstinspires.ftc.teamcode.commands.DriveCommand;
-import org.firstinspires.ftc.teamcode.commands.pretemporada.IntakeCommand;
+import org.firstinspires.ftc.teamcode.commands.skillBuilder.IntakeCommand;
 import org.firstinspires.ftc.teamcode.commands.pretemporada.OuttakeCommand;
-import org.firstinspires.ftc.teamcode.subsystems.pretemporada.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.skillBuilder.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.pretemporada.OuttakeSubsystem;
 

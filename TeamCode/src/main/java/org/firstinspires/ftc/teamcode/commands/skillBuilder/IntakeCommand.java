@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.commands.pretemporada;
+package org.firstinspires.ftc.teamcode.commands.skillBuilder;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.pretemporada.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.skillBuilder.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase {
     private final IntakeSubsystem intakeSubsystem;

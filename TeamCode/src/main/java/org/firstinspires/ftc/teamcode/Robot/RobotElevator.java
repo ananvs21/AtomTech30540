@@ -1,0 +1,35 @@
+package org.firstinspires.ftc.teamcode.Robot;
+
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.seattlesolvers.solverslib.command.InstantCommand;
+import com.seattlesolvers.solverslib.command.Robot;
+import com.seattlesolvers.solverslib.gamepad.GamepadEx;
+import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+
+import org.firstinspires.ftc.teamcode.subsystems.skillBuilder.ElevatorSubsystem;
+
+public class RobotElevator extends Robot {
+    public ElevatorSubsystem elevatorSubsystem;
+    private final GamepadEx gamepadDriver;
+
+    public RobotElevator(HardwareMap hardwareMap,Gamepad gamepad1) {
+        this.elevatorSubsystem = new ElevatorSubsystem(hardwareMap);
+        gamepadDriver = new GamepadEx(gamepad1);
+
+        configureButtonBindings();
+    }
+        private void configureButtonBindings(){
+        gamepadDriver.getGamepadButton(GamepadKeys.Button.A)
+                .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(1), elevatorSubsystem));
+        gamepadDriver.getGamepadButton(GamepadKeys.Button.B)
+                .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(2), elevatorSubsystem));
+        gamepadDriver.getGamepadButton(GamepadKeys.Button.X)
+                    .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(3), elevatorSubsystem));
+        gamepadDriver.getGamepadButton(GamepadKeys.Button.CIRCLE)
+                    .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(4), elevatorSubsystem));
+        gamepadDriver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+                    .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(0), elevatorSubsystem));
+    }
+}
+
