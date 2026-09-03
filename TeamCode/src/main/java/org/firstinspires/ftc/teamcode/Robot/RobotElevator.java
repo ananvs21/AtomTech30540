@@ -21,15 +21,15 @@ public class RobotElevator extends Robot {
     }
         private void configureButtonBindings(){
         gamepadDriver.getGamepadButton(GamepadKeys.Button.A)
-                .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(1), elevatorSubsystem));
+                .whenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(1), elevatorSubsystem));
         gamepadDriver.getGamepadButton(GamepadKeys.Button.B)
-                .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(2), elevatorSubsystem));
+                .whenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(2), elevatorSubsystem));
         gamepadDriver.getGamepadButton(GamepadKeys.Button.X)
-                    .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(3), elevatorSubsystem));
+                .whenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(3), elevatorSubsystem));
         gamepadDriver.getGamepadButton(GamepadKeys.Button.CIRCLE)
-                    .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(4), elevatorSubsystem));
+                .whenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(4), elevatorSubsystem));
         gamepadDriver.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                    .toggleWhenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(0), elevatorSubsystem));
+                .whenPressed(new InstantCommand(() -> elevatorSubsystem.setTargetIndex(0), elevatorSubsystem));
     }
 }
 

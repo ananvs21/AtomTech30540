@@ -1,18 +1,19 @@
 package org.firstinspires.ftc.teamcode.subsystems.skillBuilder;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class IntakeSubsystem extends SubsystemBase{
-    private final DcMotor motorIntake;
+    private final DcMotorEx motorIntake;
     public static final double coletaPower = 1.0;
     public static final double expelirPower = -0.8;
     public IntakeSubsystem (HardwareMap hardwareMap){
-        motorIntake = hardwareMap.get(DcMotor.class, "motorIntake");
+        motorIntake = (DcMotorEx) hardwareMap.get(DcMotor.class, "motorIntake");
         motorIntake.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        motorIntake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
     public void setPower (double power){
         motorIntake.setPower(power);
